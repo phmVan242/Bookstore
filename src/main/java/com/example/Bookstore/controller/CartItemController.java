@@ -1,6 +1,6 @@
 package com.example.Bookstore.controller;
 
-import com.example.Bookstore.dto.CartItemDto;
+import com.example.Bookstore.dto.CartItemDTO;
 import com.example.Bookstore.service.CartItemService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,17 +16,17 @@ public class CartItemController {
     private final CartItemService cartItemService;
 
     @GetMapping("/{cartId}")
-    public ResponseEntity<List<CartItemDto>> getItemsByCart(@PathVariable Long cartId) {
-        List<CartItemDto> items = cartItemService.getItemsByCartId(cartId);
+    public ResponseEntity<List<CartItemDTO>> getItemsByCart(@PathVariable Long cartId) {
+        List<CartItemDTO> items = cartItemService.getItemsByCartId(cartId);
         return ResponseEntity.ok(items);
     }
 
     @PutMapping("/{itemId}")
-    public ResponseEntity<CartItemDto> updateQuantity(
+    public ResponseEntity<CartItemDTO> updateQuantity(
             @PathVariable Long itemId,
             @RequestParam int quantity) {
 
-        CartItemDto updated = cartItemService.updateItemQuantity(itemId, quantity);
+        CartItemDTO updated = cartItemService.updateItemQuantity(itemId, quantity);
         return ResponseEntity.ok(updated);
     }
 

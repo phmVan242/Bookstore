@@ -1,12 +1,12 @@
 package com.example.Bookstore.mapper;
 
-import com.example.Bookstore.dto.CartItemDto;
+import com.example.Bookstore.dto.CartItemDTO;
 import com.example.Bookstore.model.CartItem;
 
 public class CartItemMapper {
 
-    public static CartItemDto mapToCartItemDto(CartItem item) {
-        return new CartItemDto(
+    public static CartItemDTO mapToCartItemDto(CartItem item) {
+        return new CartItemDTO(
                 item.getId(),
                 item.getBook().getId(),
                 item.getBook().getTitle(),
@@ -15,7 +15,7 @@ public class CartItemMapper {
         );
     }
 
-    public static CartItem mapToCartItem(CartItemDto dto) {
+    public static CartItem mapToCartItem(CartItemDTO dto) {
         CartItem item = new CartItem();
         item.setId(dto.getId());
         item.setQuantity(dto.getQuantity());

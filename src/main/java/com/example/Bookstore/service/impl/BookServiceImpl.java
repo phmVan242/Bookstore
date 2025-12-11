@@ -1,7 +1,7 @@
 package com.example.Bookstore.service.impl;
 
 import com.example.Bookstore.mapper.BookMapper;
-import com.example.Bookstore.dto.BookDto;
+import com.example.Bookstore.dto.BookDTO;
 import com.example.Bookstore.exception.ResourceNotFoundException;
 import com.example.Bookstore.model.Book;
 import com.example.Bookstore.repository.BookRepository;
@@ -19,7 +19,7 @@ public class BookServiceImpl implements BookService {
     private  BookRepository bookRepository;
 
     @Override
-    public List<BookDto> getAllBooks() {
+    public List<BookDTO> getAllBooks() {
         List<Book> books = bookRepository.findAll();
         return books.stream().map(book -> BookMapper.mapToBookDto(book))
                 .collect(Collectors.toList());
@@ -27,7 +27,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto getBookById(Long id) {
+    public BookDTO getBookById(Long id) {
         Book book  = bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book not found " + id));
         return BookMapper.mapToBookDto(book);
@@ -42,7 +42,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto updateBook(Long id, BookDto updatedBook) {
+    public BookDTO updateBook(Long id, BookDTO updatedBook) {
         Book book = bookRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Book is not exists with given id: " + id));
         book.setTitle(updatedBook.getTitle());
@@ -57,7 +57,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto createBook(BookDto bookDto) {
+    public BookDTO createBook(BookDTO bookDto) {
         Book book = BookMapper.mapToBook(bookDto);
         Book savedBook = bookRepository.save(book);
         return BookMapper.mapToBookDto(savedBook);

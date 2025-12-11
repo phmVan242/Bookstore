@@ -1,6 +1,6 @@
 package com.example.Bookstore.service.impl;
 
-import com.example.Bookstore.dto.CartItemDto;
+import com.example.Bookstore.dto.CartItemDTO;
 import com.example.Bookstore.mapper.CartItemMapper;
 import com.example.Bookstore.model.Cart;
 import com.example.Bookstore.model.CartItem;
@@ -24,7 +24,7 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public List<CartItemDto> getItemsByCartId(Long cartId) {
+    public List<CartItemDTO> getItemsByCartId(Long cartId) {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
         return cartItemRepository.findByCart(cart)
@@ -34,7 +34,7 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CartItemDto updateItemQuantity(Long itemId, int quantity) {
+    public CartItemDTO updateItemQuantity(Long itemId, int quantity) {
         CartItem item = cartItemRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("Cart item not found"));
         item.setQuantity(quantity);

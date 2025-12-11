@@ -1,11 +1,11 @@
 package com.example.Bookstore.service;
 
-import com.example.Bookstore.dto.CartItemDto;
+import com.example.Bookstore.dto.CartItemDTO;
 
 import java.util.List;
 
 public interface CartItemService {
-    List<CartItemDto> getItemsByCartId(Long cartId);
-    CartItemDto updateItemQuantity(Long itemId, int quantity);
+    List<CartItemDTO> getItemsByCartId(Long cartId);
+    CartItemDTO updateItemQuantity(Long itemId, int quantity);
     void removeItem(Long itemId);
 }
