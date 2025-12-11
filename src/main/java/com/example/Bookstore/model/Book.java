@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,28 +18,42 @@ import java.util.Set;
 @Table(name = "books")
 public class Book extends BaseModel{
 
-    @Column(nullable = false, unique = true, length = 250)
+    @Column(nullable = false)
     private String title;
 
     private String author;
 
-    @Column(nullable = false)
-    private double price;
-
-    @Column(nullable = false)
-    private int stock;
-
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private String image;
+    @Column(name = "original_price", nullable = false)
+    private Double originalPrice;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "book_category",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-//    @JsonIgnore
-    private Set<Category> categories;
+    // optional salePrice
+    @Column(name = "sale_price")
+    private Double salePrice;
+
+    @Column(name = "stock_quantity", nullable = false)
+    private Integer stockQuantity;
+
+    @Column(name = "sold_quantity")
+    private Integer soldQuantity = 0;
+
+    private String publisher;
+
+    @Column(name = "published_date")
+    private LocalDate publishedDate;
+
+    @Transient
+    private List<String> imageUrls = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @Column(name = "is_active")
+    private boolean isActive = true;
+
+    @OneToMany(mappedBy = "book")
+    private List<OrderDetail> orderDetails = new ArrayList<>();
 }

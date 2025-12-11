@@ -1,4 +1,4 @@
-package com.example.Bookstore.model;
+package com.example.Bookstore.model.enums;
 
 public enum OrderStatus {
     PENDING,

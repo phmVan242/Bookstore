@@ -1,13 +1,14 @@
 package com.example.Bookstore.model;
 
+import com.example.Bookstore.model.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -18,34 +19,36 @@ import java.util.List;
 @Table(name = "users")
 public class User extends BaseModel{
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false, length = 255)
-    private String password;
+    @Column(nullable = false)
+    private String password; // store hashed
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(name = "full_name", length = 100)
+    @Column(name = "full_name")
     private String fullName;
 
-    @Column(length = 15)
     private String phone;
+    private String address;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role = Role.USER;
 
-    @Column(nullable = false)
-    private boolean status = true;
+    @Column(name = "is_active")
+    private boolean isActive = true;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Blog> blogs = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Cart cart;
+
 
 }

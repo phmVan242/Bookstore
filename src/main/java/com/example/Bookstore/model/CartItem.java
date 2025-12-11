@@ -14,13 +14,13 @@ import lombok.Setter;
 @Entity
 @Table(name = "cart_items")
 public class CartItem extends BaseModel{
-    // Mối quan hệ với Cart
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", nullable = false)
     @JsonBackReference
     private Cart cart;
 
-    // Mối quan hệ với Book
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;

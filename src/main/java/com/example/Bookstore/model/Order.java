@@ -1,7 +1,7 @@
 package com.example.Bookstore.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.Bookstore.model.enums.OrderStatus;
+import com.example.Bookstore.model.enums.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,27 +20,39 @@ import java.util.List;
 @Table(name = "orders")
 public class Order extends BaseModel {
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<OrderDetail> orderDetails = new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
     private User user;
 
+    @Column(name = "total_amount", nullable = false)
+    private Double totalAmount;
+
+    @Column(name = "discount_amount")
+    private Double discountAmount = 0.0;
+
+    @Column(name = "final_amount", nullable = false)
+    private Double finalAmount;
+
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private OrderStatus status = OrderStatus.PENDING;
 
-    @Column(length = 255)
-    private String shipment;
+    @Column(name = "shipping_address")
+    private String shippingAddress;
 
-    @Column(length = 500)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method", nullable = false)
+    private PaymentMethod paymentMethod;
+
+    @Column(columnDefinition = "TEXT")
     private String note;
 
+    @Column(name = "order_date", nullable = false)
     private LocalDateTime orderDate = LocalDateTime.now();
 
-    @Column(length = 50)
-    private String paymentMethod;
+    @Column(name = "completed_date")
+    private LocalDateTime completedDate;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderDetail> orderDetails = new ArrayList<>();
 }

@@ -26,15 +26,18 @@ public class Cart extends BaseModel {
     private List<CartItem> cartItems = new ArrayList<>();
 
     public Cart(User user) {
-        super();
+        this.user = user;
     }
 
+    // add / remove helpers
     public void addItem(CartItem item) {
+        if (item == null) return;
         cartItems.add(item);
         item.setCart(this);
     }
 
     public void removeItem(CartItem item) {
+        if (item == null) return;
         cartItems.remove(item);
         item.setCart(null);
     }

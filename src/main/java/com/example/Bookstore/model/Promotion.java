@@ -1,13 +1,14 @@
 package com.example.Bookstore.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.Bookstore.model.enums.PromotionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -18,20 +19,31 @@ import java.util.List;
 @Table(name = "promotions")
 public class Promotion extends BaseModel{
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private double discountPercent;
+    @Column(unique = true)
+    private String code;
 
-    @Column(length = 255)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PromotionType type;
+
+    @Column(nullable = false)
+    private Double value;
+
+    @Column(name = "start_date", nullable = false)
+    private LocalDate startDate;
+
+    @Column(name = "end_date", nullable = false)
+    private LocalDate endDate;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    private LocalDateTime startDate;
+    @Column(name = "is_active")
+    private boolean isActive = true;
 
-    private LocalDateTime endDate;
-
-    @ManyToMany(mappedBy = "promotions")
-    @JsonIgnore
-    private List<OrderDetail> orderDetails;
+    @OneToMany(mappedBy = "promotion")
+    private List<OrderDetail> orderDetails = new ArrayList<>();
 }

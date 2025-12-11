@@ -1,10 +1,10 @@
 package com.example.Bookstore.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,14 +14,16 @@ import java.util.Set;
 @Table(name = "categories")
 public class Category extends BaseModel {
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<Book> books = new HashSet<>();
+    private String description;
 
-    public Category(String name) {
-        this.name = name;
-    }
+    @Column(name = "is_active")
+    private boolean isActive = true;
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    private List<Book> books = new ArrayList<>();
+
+
 }

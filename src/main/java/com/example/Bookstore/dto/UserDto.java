@@ -1,6 +1,6 @@
 package com.example.Bookstore.dto;
 
-import com.example.Bookstore.model.Role;
+import com.example.Bookstore.model.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

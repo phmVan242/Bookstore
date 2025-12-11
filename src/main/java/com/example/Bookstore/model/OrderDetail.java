@@ -1,6 +1,5 @@
 package com.example.Bookstore.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,25 +18,26 @@ public class OrderDetail extends BaseModel{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
-    @JsonIgnore
     private Order order;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
     @Column(nullable = false)
-    private int quantity;
+    private Integer quantity;
 
-    @Column(nullable = false)
-    private double price;
+    @Column(name = "original_price", nullable = false)
+    private Double originalPrice;
 
-    @ManyToMany
-    @JoinTable(
-            name = "order_detail_promotion",
-            joinColumns = @JoinColumn(name = "order_detail_id"),
-            inverseJoinColumns = @JoinColumn(name = "promotion_id")
-    )
-    @JsonIgnore
-    private List<Promotion> promotions;
+    @Column(name = "discounted_price")
+    private Double discountedPrice;
+
+    @Column(name = "final_price", nullable = false)
+    private Double finalPrice; // price after discount for single unit
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "promotion_id")
+    private Promotion promotion;
+
 }

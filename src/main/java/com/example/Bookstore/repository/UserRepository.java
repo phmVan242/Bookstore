@@ -1,6 +1,6 @@
 package com.example.Bookstore.repository;
 
-import com.example.Bookstore.model.Role;
+import com.example.Bookstore.model.enums.Role;
 import com.example.Bookstore.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -4,7 +4,7 @@ import com.example.Bookstore.dto.SignupRequest;
 import com.example.Bookstore.dto.UserDto;
 import com.example.Bookstore.mapper.UserMapper;
 import com.example.Bookstore.model.Cart;
-import com.example.Bookstore.model.Role;
+import com.example.Bookstore.model.enums.Role;
 import com.example.Bookstore.model.User;
 import com.example.Bookstore.repository.UserRepository;
 import com.example.Bookstore.service.AuthService;

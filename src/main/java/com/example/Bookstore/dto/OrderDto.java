@@ -1,6 +1,6 @@
 package com.example.Bookstore.dto;
 
-import com.example.Bookstore.model.OrderStatus;
+import com.example.Bookstore.model.enums.OrderStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;
