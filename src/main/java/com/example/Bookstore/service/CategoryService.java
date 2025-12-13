@@ -1,12 +1,12 @@
 package com.example.Bookstore.service;
 
-import com.example.Bookstore.dto.CategoryDto;
+import com.example.Bookstore.dto.CategoryDTO;
 import java.util.List;
 
 public interface CategoryService {
-    List<CategoryDto> getAllCategories();
-    CategoryDto getCategoryById(Long id);
-    CategoryDto createCategory(CategoryDto categoryDto);
-    CategoryDto updateCategory(Long id, CategoryDto categoryDto);
+    List<CategoryDTO> getAllCategories();
+    CategoryDTO getCategoryById(Long id);
+    CategoryDTO createCategory(CategoryDTO categoryDto);
+    CategoryDTO updateCategory(Long id, CategoryDTO categoryDto);
     void deleteCategory(Long id);
 }

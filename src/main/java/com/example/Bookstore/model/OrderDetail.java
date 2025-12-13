@@ -40,4 +40,9 @@ public class OrderDetail extends BaseModel{
     @JoinColumn(name = "promotion_id")
     private Promotion promotion;
 
+    // Helper method to calculate subtotal
+    @Transient
+    public Double getSubtotal() {
+        return discountedPrice != null ? discountedPrice * quantity : originalPrice * quantity;
+    }
 }

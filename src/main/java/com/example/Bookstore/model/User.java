@@ -50,5 +50,4 @@ public class User extends BaseModel{
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Cart cart;
 
-
 }

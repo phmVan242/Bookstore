@@ -1,9 +1,9 @@
 package com.example.Bookstore.service;
 
 import com.example.Bookstore.dto.SignupRequest;
-import com.example.Bookstore.dto.UserDto;
+import com.example.Bookstore.dto.UserDTO;
 
 public interface AuthService    {
-    UserDto createUser(SignupRequest signupRequest);
+    UserDTO createUser(SignupRequest signupRequest);
 }
 

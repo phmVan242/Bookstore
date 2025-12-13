@@ -32,7 +32,7 @@ public class Blog extends BaseModel{
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private BlogStatus status = BlogStatus.DRAFT;
+    private BlogStatus status;
 
     @Column(name = "published_date")
     private LocalDateTime publishedDate;

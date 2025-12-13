@@ -1,7 +1,7 @@
 package com.example.Bookstore.dto;
 
-import com.example.Bookstore.model.Book;
-import com.example.Bookstore.model.CartItem;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -9,27 +9,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartItemDTO {
+
     private Long id;
+
+    @NotNull(message = "Book is required")
     private Long bookId;
+
     private String bookTitle;
+
+    private Double bookPrice;
+
+    @Min(value = 1, message = "Quantity must be at least 1")
     private int quantity;
 
-    public static CartItemDTO fromEntity(CartItem item) {
-        if (item == null) return null;
-
-        CartItemDTO dto = new CartItemDTO();
-        dto.setId(item.getId());
-        dto.setBookId(item.getBook().getId());
-        dto.setBookTitle(item.getBook().getTitle());
-        dto.setQuantity(item.getQuantity());
-        return dto;
-    }
-
-    public CartItem toEntity(Book book) {
-        CartItem item = new CartItem();
-        item.setId(this.id);
-        item.setBook(book);
-        item.setQuantity(this.quantity);
-        return item;
-    }
+    private Double subtotal;
 }

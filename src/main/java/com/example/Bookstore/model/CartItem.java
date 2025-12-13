@@ -15,7 +15,6 @@ import lombok.Setter;
 @Table(name = "cart_items")
 public class CartItem extends BaseModel{
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", nullable = false)
     @JsonBackReference

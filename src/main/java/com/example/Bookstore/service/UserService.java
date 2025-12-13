@@ -1,14 +1,14 @@
 package com.example.Bookstore.service;
 
-import com.example.Bookstore.dto.UserDto;
-import com.example.Bookstore.model.User;
+import com.example.Bookstore.dto.UserDTO;
 
 import java.util.List;
 
 public interface UserService {
-    UserDto createUser(UserDto userDto);
-    UserDto getUserById(Long id);
-    List<UserDto> getAllUsers();
-    UserDto updateUser(Long id, UserDto userDto);
+    UserDTO register(UserDTO userDto);
+
+    UserDTO getUserById(Long id);
+    List<UserDTO> getAllUsers();
+    UserDTO updateUser(Long id, UserDTO userDto);
     void deleteUser(Long id);
 }

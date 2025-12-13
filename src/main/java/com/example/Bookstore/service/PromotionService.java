@@ -1,13 +1,13 @@
 package com.example.Bookstore.service;
 
-import com.example.Bookstore.dto.PromotionDto;
+import com.example.Bookstore.dto.PromotionDTO;
 
 import java.util.List;
 
 public interface PromotionService {
-    List<PromotionDto> getAllPromotions();
-    PromotionDto getPromotionById(Long id);
-    PromotionDto createPromotion(PromotionDto promotionDto);
-    PromotionDto updatePromotion(Long id, PromotionDto promotionDto);
+    List<PromotionDTO> getAllPromotions();
+    PromotionDTO getPromotionById(Long id);
+    PromotionDTO createPromotion(PromotionDTO promotionDto);
+    PromotionDTO updatePromotion(Long id, PromotionDTO promotionDto);
     void deletePromotion(Long id);
 }

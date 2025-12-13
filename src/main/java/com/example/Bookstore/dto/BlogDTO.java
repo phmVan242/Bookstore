@@ -1,17 +1,19 @@
 package com.example.Bookstore.dto;
 
-import com.example.Bookstore.model.Blog;
-import com.example.Bookstore.model.User;
 import com.example.Bookstore.model.enums.BlogStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class BlogDTO {
@@ -19,6 +21,7 @@ public class BlogDTO {
     private Long id;
 
     @NotBlank(message = "Blog title is required")
+    @Size(min = 5, max = 200, message = "Blog title must be between 5 and 200 characters")
     private String title;
 
     @NotBlank(message = "Blog content is required")
@@ -29,43 +32,13 @@ public class BlogDTO {
     @NotNull(message = "User is required")
     private Long userId;
 
-    private String username;
+    private String authorName;
 
-    @NotNull(message = "Status is required")
+    @NotNull(message = "Blog status is required")
     private BlogStatus status;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime publishedDate;
 
-    public static BlogDTO fromEntity(Blog blog) {
-        return BlogDTO.builder()
-                .id(blog.getId())
-                .title(blog.getTitle())
-                .content(blog.getContent())
-                .imageUrl(blog.getImageUrl())
-                .userId(blog.getUser() != null ? blog.getUser().getId() : null)
-                .username(blog.getUser() != null ? blog.getUser().getUsername() : null)
-                .status(blog.getStatus())
-                .publishedDate(blog.getPublishedDate())
-                .build();
-    }
-
-    public Blog toEntity() {
-        Blog blog = new Blog();
-
-        blog.setId(this.id);
-        blog.setTitle(this.title);
-        blog.setContent(this.content);
-        blog.setImageUrl(this.imageUrl);
-        blog.setStatus(this.status);
-        blog.setPublishedDate(this.publishedDate);
-
-        if (this.userId != null) {
-            User user = new User();
-            user.setId(this.userId);
-            blog.setUser(user);
-        }
-
-        return blog;
-    }
+    private String publishedDateFormatted;
 }

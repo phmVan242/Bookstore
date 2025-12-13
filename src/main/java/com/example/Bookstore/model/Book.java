@@ -29,10 +29,6 @@ public class Book extends BaseModel{
     @Column(name = "original_price", nullable = false)
     private Double originalPrice;
 
-    // optional salePrice
-    @Column(name = "sale_price")
-    private Double salePrice;
-
     @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity;
 
@@ -56,4 +52,7 @@ public class Book extends BaseModel{
 
     @OneToMany(mappedBy = "book")
     private List<OrderDetail> orderDetails = new ArrayList<>();
+
+    @OneToMany(mappedBy = "book")
+    private List<CartItem> cartItems = new ArrayList<>();
 }

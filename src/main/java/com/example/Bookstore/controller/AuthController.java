@@ -1,6 +1,6 @@
 package com.example.Bookstore.controller;
 import com.example.Bookstore.dto.SignupRequest;
-import com.example.Bookstore.dto.UserDto;
+import com.example.Bookstore.dto.UserDTO;
 import com.example.Bookstore.service.AuthService;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest){
         try{
-            UserDto createdUser = authService.createUser(signupRequest);
+            UserDTO createdUser = authService.createUser(signupRequest);
             return new ResponseEntity<>(createdUser, HttpStatus.OK);
         } catch (EntityExistsException entityExistsException){
             return new ResponseEntity<>("User already exist", HttpStatus.NOT_ACCEPTABLE);
