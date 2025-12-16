@@ -5,7 +5,7 @@ import com.example.Bookstore.model.Promotion;
 
 public class PromotionMapper {
 
-    public static PromotionDTO toDTO(Promotion promotion) {
+    public static PromotionDTO mapToPromotionDTO(Promotion promotion) {
         PromotionDTO dto = new PromotionDTO();
         dto.setId(promotion.getId());
         dto.setName(promotion.getName());
@@ -19,7 +19,7 @@ public class PromotionMapper {
         return dto;
     }
 
-    public static Promotion toEntity(PromotionDTO dto) {
+    public static Promotion mapToPromotion(PromotionDTO dto) {
         Promotion promotion = new Promotion();
         promotion.setName(dto.getName());
         promotion.setCode(dto.getCode());

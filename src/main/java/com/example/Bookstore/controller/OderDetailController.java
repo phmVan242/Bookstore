@@ -1,7 +1,6 @@
 package com.example.Bookstore.controller;
 
 import com.example.Bookstore.model.OrderDetail;
-import com.example.Bookstore.service.OrderDetailService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

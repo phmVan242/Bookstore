@@ -1,64 +1,79 @@
 package com.example.Bookstore.service.impl;
 
-import com.example.Bookstore.dto.UserDto;
+import com.example.Bookstore.dto.UserDTO;
 import com.example.Bookstore.exception.ResourceNotFoundException;
 import com.example.Bookstore.mapper.UserMapper;
 import com.example.Bookstore.model.User;
 import com.example.Bookstore.repository.UserRepository;
 import com.example.Bookstore.service.UserService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
     @Override
-    public UserDto createUser(UserDto userDto) {
-        User user = UserMapper.mapToUser(userDto);
-        User savedUser = userRepository.save(user);
-        return UserMapper.mapToUserDto(savedUser);
-    }
-
-    @Override
-    public UserDto getUserById(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
-        return UserMapper.mapToUserDto(user);
-    }
-
-    @Override
-    public List<UserDto> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(UserMapper::mapToUserDto)
+                .map(UserMapper::mapToUserDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public UserDto updateUser(Long id, UserDto updatedUser) {
-        User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
-
-        existingUser.setUsername(updatedUser.getUsername());
-        existingUser.setEmail(updatedUser.getEmail());
-        existingUser.setFullName(updatedUser.getFullName());
-        existingUser.setPhone(updatedUser.getPhone());
-        existingUser.setRole(updatedUser.getRole());
-        existingUser.setStatus(updatedUser.isStatus());
-        User savedUser = userRepository.save(existingUser);
-        return UserMapper.mapToUserDto(savedUser);
+    public UserDTO getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found with id: " + id));
+        return UserMapper.mapToUserDTO(user);
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public UserDTO createUser(UserDTO dto) {
+        User user = UserMapper.mapToUser(dto);
+        user.setActive(true);
+
+        return UserMapper.mapToUserDTO(
+                userRepository.save(user)
+        );
+    }
+
+    /**
+     * Update thông tin cá nhân (admin hoặc chính user)
+     * KHÔNG update role, password, status
+     */
+    @Override
+    public UserDTO updateUserProfile(Long id, UserDTO dto) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
-        userRepository.delete(user);
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found with id: " + id));
+
+        user.setFullName(dto.getFullName());
+        user.setEmail(dto.getEmail());
+        user.setPhone(dto.getPhone());
+        user.setAddress(dto.getAddress());
+
+        return UserMapper.mapToUserDTO(
+                userRepository.save(user)
+        );
+    }
+
+    /**
+     * Khoá / mở khoá user
+     */
+    @Override
+    public void changeUserStatus(Long id, boolean active) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found with id: " + id));
+
+        user.setActive(active);
+        userRepository.save(user);
     }
 }

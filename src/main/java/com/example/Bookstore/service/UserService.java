@@ -5,10 +5,14 @@ import com.example.Bookstore.dto.UserDTO;
 import java.util.List;
 
 public interface UserService {
-    UserDTO register(UserDTO userDto);
+
+    List<UserDTO> getAllUsers();
 
     UserDTO getUserById(Long id);
-    List<UserDTO> getAllUsers();
-    UserDTO updateUser(Long id, UserDTO userDto);
-    void deleteUser(Long id);
+
+    UserDTO createUser(UserDTO dto);
+
+    UserDTO updateUserProfile(Long id, UserDTO dto);
+
+    void changeUserStatus(Long id, boolean active);
 }

@@ -8,6 +8,6 @@ public interface OrderService {
     OrderDTO getOrderById(Long id);
     List<OrderDTO> getOrdersByUser(Long userId);
     OrderDTO createOrder(OrderDTO orderDto);
-    OrderDTO updateOrder(Long id, OrderDTO orderDto);
+    OrderDTO updateOrderStatus(Long orderId, String status);
     void deleteOrder(Long id);
 }

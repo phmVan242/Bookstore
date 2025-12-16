@@ -1,7 +1,7 @@
 package com.example.Bookstore.service.impl;
 
 import com.example.Bookstore.dto.SignupRequest;
-import com.example.Bookstore.dto.UserDto;
+import com.example.Bookstore.dto.UserDTO;
 import com.example.Bookstore.mapper.UserMapper;
 import com.example.Bookstore.model.Cart;
 import com.example.Bookstore.model.enums.Role;
@@ -19,7 +19,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDto createUser(SignupRequest signupRequest) {
+    public UserDTO createUser(SignupRequest signupRequest) {
         if(userRepository.findFirstByUsername(signupRequest.getUsername()).isPresent()){
             throw new RuntimeException("User already present with email " + signupRequest.getUsername());
         }
@@ -29,14 +29,14 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(new BCryptPasswordEncoder().encode(signupRequest.getPassword()));
         user.setPhone(signupRequest.getPhone());
         user.setRole(Role.USER);
-        user.setStatus(true);
+//        user.setStatus(true);
         //Tạo cart cho user
         Cart cart = new Cart();
         cart.setUser(user);
         user.setCart(cart);
 
         User createdUser = userRepository.save(user);
-        return UserMapper.mapToUserDto(createdUser);
+        return UserMapper.mapToUserDTO(createdUser);
     }
 }
 

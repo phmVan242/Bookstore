@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class CartMapper {
 
-    public static CartDTO mapToDTO(Cart cart) {
+    public static CartDTO mapToCartDTO(Cart cart) {
         CartDTO dto = new CartDTO();
         dto.setId(cart.getId());
         dto.setUserId(cart.getUser().getId());
@@ -16,7 +16,7 @@ public class CartMapper {
         dto.setItems(
                 cart.getCartItems()
                         .stream()
-                        .map(CartItemMapper::toDTO)
+                        .map(CartItemMapper::mapToCartItemDTO)
                         .collect(Collectors.toList())
         );
 

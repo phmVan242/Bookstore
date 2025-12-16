@@ -1,7 +1,6 @@
 package com.example.Bookstore.controller;
 
 import com.example.Bookstore.dto.CartItemDTO;
-import com.example.Bookstore.service.CartItemService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

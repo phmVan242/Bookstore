@@ -33,7 +33,6 @@ public class UserMapper {
         user.setAddress(dto.getAddress());
         user.setRole(dto.getRole());
         user.setActive(dto.isActive());
-        // ❗ password, orders, blogs, cart xử lý riêng
 
         return user;
     }

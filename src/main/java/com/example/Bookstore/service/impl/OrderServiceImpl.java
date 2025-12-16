@@ -1,85 +1,79 @@
 package com.example.Bookstore.service.impl;
 
-import com.example.Bookstore.dto.OrderDto;
+import com.example.Bookstore.dto.OrderDTO;
+import com.example.Bookstore.exception.ResourceNotFoundException;
 import com.example.Bookstore.mapper.OrderMapper;
 import com.example.Bookstore.model.Order;
 import com.example.Bookstore.model.User;
+import com.example.Bookstore.model.enums.OrderStatus;
 import com.example.Bookstore.repository.OrderRepository;
 import com.example.Bookstore.repository.UserRepository;
 import com.example.Bookstore.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, UserRepository userRepository) {
-        this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
-    }
-
     @Override
-    public List<OrderDto> getAllOrders() {
+    public List<OrderDTO> getAllOrders() {
         return orderRepository.findAll()
                 .stream()
-                .map(OrderMapper::mapToOrderDto)
+                .map(OrderMapper::mapToOrderDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public OrderDto getOrderById(Long id) {
+    public OrderDTO getOrderById(Long id) {
         Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found with id: " + id));
-        return OrderMapper.mapToOrderDto(order);
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Order not found with id: " + id));
+        return OrderMapper.mapToOrderDTO(order);
     }
 
     @Override
-    public List<OrderDto> getOrdersByUser(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
-        return orderRepository.findByUser(user)
-                .stream()
-                .map(OrderMapper::mapToOrderDto)
-                .collect(Collectors.toList());
+    public List<OrderDTO> getOrdersByUser(Long id) {
+        return orderRepository.findByUserId(id);
+//                .stream()
+//                .map(OrderMapper::mapToOrderDTO)
+//                .collect(Collectors.toList());
     }
 
     @Override
-    public OrderDto createOrder(OrderDto orderDto) {
-        User user = userRepository.findById(orderDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + orderDto.getUserId()));
+    public OrderDTO createOrder(OrderDTO dto) {
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found with id: " + dto.getUserId()));
 
-        Order order = OrderMapper.mapToOrder(orderDto, user);
-        Order savedOrder = orderRepository.save(order);
+        Order order = OrderMapper.mapToOrder(dto);
+        order.setUser(user);
+        order.setStatus(OrderStatus.PENDING);
 
-        return OrderMapper.mapToOrderDto(savedOrder);
+        return OrderMapper.mapToOrderDTO(orderRepository.save(order));
     }
 
     @Override
-    public OrderDto updateOrder(Long id, OrderDto orderDto) {
-        Order existingOrder = orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found with id: " + id));
+    public OrderDTO updateOrderStatus(Long orderId, String status) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Order not found with id: " + orderId));
 
-        // cập nhật các trường có thể thay đổi
-        existingOrder.setStatus(orderDto.getStatus());
-        existingOrder.setShipment(orderDto.getShipment());
-        existingOrder.setNote(orderDto.getNote());
-        existingOrder.setPaymentMethod(orderDto.getPaymentMethod());
-        existingOrder.setOrderDate(orderDto.getOrderDate());
-
-        Order updatedOrder = orderRepository.save(existingOrder);
-        return OrderMapper.mapToOrderDto(updatedOrder);
+        order.setStatus(OrderStatus.valueOf(status));
+        return OrderMapper.mapToOrderDTO(orderRepository.save(order));
     }
 
     @Override
     public void deleteOrder(Long id) {
-        if (!orderRepository.existsById(id)) {
-            throw new RuntimeException("Order not found with id: " + id);
-        }
-        orderRepository.deleteById(id);
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Order not found with id: " + id));
+        orderRepository.delete(order);
     }
 }

@@ -5,7 +5,7 @@ import com.example.Bookstore.model.CartItem;
 
 public class CartItemMapper {
 
-    public static CartItemDTO mapToDTO(CartItem item) {
+    public static CartItemDTO mapToCartItemDTO(CartItem item) {
         CartItemDTO dto = new CartItemDTO();
         dto.setId(item.getId());
         dto.setBookId(item.getBook().getId());

@@ -1,6 +1,6 @@
 package com.example.Bookstore.service.impl;
 
-import com.example.Bookstore.dto.CategoryDto;
+import com.example.Bookstore.dto.CategoryDTO;
 import com.example.Bookstore.mapper.CategoryMapper;
 import com.example.Bookstore.model.Category;
 import com.example.Bookstore.repository.CategoryRepository;
@@ -18,36 +18,36 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<CategoryDto> getAllCategories() {
+    public List<CategoryDTO> getAllCategories() {
         return categoryRepository.findAll()
                 .stream()
-                .map(CategoryMapper::toCategoryDto)
+                .map(CategoryMapper::mapToCategoryDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public CategoryDto getCategoryById(Long id) {
+    public CategoryDTO getCategoryById(Long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
-        return CategoryMapper.toCategoryDto(category);
+        return CategoryMapper.mapToCategoryDTO(category);
     }
 
     @Override
-    public CategoryDto createCategory(CategoryDto categoryDto) {
-        if (categoryRepository.existsByName(categoryDto.getName())) {
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+        if (categoryRepository.existsByName(categoryDTO.getName())) {
             throw new RuntimeException("Category already exists!");
         }
-        Category saved = categoryRepository.save(CategoryMapper.toCategory(categoryDto));
-        return CategoryMapper.toCategoryDto(saved);
+        Category saved = categoryRepository.save(CategoryMapper.mapToCategory(categoryDTO));
+        return CategoryMapper.mapToCategoryDTO(saved);
     }
 
     @Override
-    public CategoryDto updateCategory(Long id, CategoryDto categoryDto) {
+    public CategoryDTO updateCategory(Long id, CategoryDTO categoryDTO) {
         Category existing = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
-        existing.setName(categoryDto.getName());
+        existing.setName(categoryDTO.getName());
         Category updated = categoryRepository.save(existing);
-        return CategoryMapper.toCategoryDto(updated);
+        return CategoryMapper.mapToCategoryDTO(updated);
     }
 
     @Override
