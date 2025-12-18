@@ -12,7 +12,7 @@ public interface UserService {
 
     UserDTO createUser(UserDTO dto);
 
-    UserDTO updateUserProfile(Long id, UserDTO dto);
+    UserDTO updateUser(Long id, UserDTO dto);
 
     void changeUserStatus(Long id, boolean active);
 }

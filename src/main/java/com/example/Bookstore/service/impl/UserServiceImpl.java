@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
      * KHÔNG update role, password, status
      */
     @Override
-    public UserDTO updateUserProfile(Long id, UserDTO dto) {
+    public UserDTO updateUser(Long id, UserDTO dto) {
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found with id: " + id));

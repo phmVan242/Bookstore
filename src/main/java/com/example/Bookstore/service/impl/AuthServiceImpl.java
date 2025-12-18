@@ -26,9 +26,13 @@ public class AuthServiceImpl implements AuthService {
         User user = new User();
         user.setUsername(signupRequest.getUsername());
         user.setFullName(signupRequest.getFullName());
-        user.setPassword(new BCryptPasswordEncoder().encode(signupRequest.getPassword()));
+//        user.setPassword(new BCryptPasswordEncoder().encode(signupRequest.getPassword()));
+        user.setPassword(signupRequest.getPassword());
         user.setPhone(signupRequest.getPhone());
+        user.setAddress(signupRequest.getAddress());
+        user.setEmail(signupRequest.getEmail());
         user.setRole(Role.USER);
+        user.setActive(true);
 //        user.setStatus(true);
         //Tạo cart cho user
         Cart cart = new Cart();

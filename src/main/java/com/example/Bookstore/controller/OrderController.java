@@ -1,6 +1,6 @@
 package com.example.Bookstore.controller;
 
-import com.example.Bookstore.dto.OrderDto;
+import com.example.Bookstore.dto.OrderDTO;
 import com.example.Bookstore.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,38 +18,38 @@ public class OrderController {
 
     // Lấy tất cả order
     @GetMapping
-    public ResponseEntity<List<OrderDto>> getAllOrders() {
-        List<OrderDto> orders = orderService.getAllOrders();
+    public ResponseEntity<List<OrderDTO>> getAllOrders() {
+        List<OrderDTO> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
 
     // Lấy order theo ID
     @GetMapping("/{id}")
-    public ResponseEntity<OrderDto> getOrderById(@PathVariable Long id) {
-        OrderDto order = orderService.getOrderById(id);
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long id) {
+        OrderDTO order = orderService.getOrderById(id);
         return ResponseEntity.ok(order);
     }
 
     // Lấy danh sách order theo userId
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<OrderDto>> getOrdersByUser(@PathVariable Long userId) {
-        List<OrderDto> orders = orderService.getOrdersByUser(userId);
+    public ResponseEntity<List<OrderDTO>> getOrdersByUser(@PathVariable Long userId) {
+        List<OrderDTO> orders = orderService.getOrdersByUser(userId);
         return ResponseEntity.ok(orders);
     }
 
     // Tạo mới order
     @PostMapping
-    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) {
-        OrderDto createdOrder = orderService.createOrder(orderDto);
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDto) {
+        OrderDTO createdOrder = orderService.createOrder(orderDto);
         return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
 
     // Cập nhật order
-    @PutMapping("/{id}")
-    public ResponseEntity<OrderDto> updateOrder(@PathVariable Long id, @RequestBody OrderDto updatedOrder) {
-        OrderDto order = orderService.updateOrder(id, updatedOrder);
-        return ResponseEntity.ok(order);
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<OrderDTO> updateOrder(@PathVariable Long id, @RequestBody OrderDTO updatedOrder) {
+//        OrderDTO order = orderService.updateOrder(id, updatedOrder);
+//        return ResponseEntity.ok(order);
+//    }
 
     // Xóa order
     @DeleteMapping("/{id}")
