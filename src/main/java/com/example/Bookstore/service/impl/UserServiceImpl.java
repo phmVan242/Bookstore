@@ -7,6 +7,8 @@ import com.example.Bookstore.model.User;
 import com.example.Bookstore.repository.UserRepository;
 import com.example.Bookstore.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,6 +40,8 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserDTO dto) {
         User user = UserMapper.mapToUser(dto);
         user.setActive(true);
+//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+//        user.setPassword(passwordEncoder.encode());
 
         return UserMapper.mapToUserDTO(
                 userRepository.save(user)

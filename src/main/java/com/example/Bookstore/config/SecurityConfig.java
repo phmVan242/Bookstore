@@ -6,6 +6,24 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
+//@Configuration
+//public class SecurityConfig {
+//
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .csrf(csrf -> csrf.disable())
+//                .cors(Customizer.withDefaults())
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("api/auth/signup", "api/auth/login").permitAll()  // mở cho phép
+//                        .anyRequest().authenticated() // còn lại cần đăng nhập
+//                )
+//                .httpBasic(Customizer.withDefaults());
+//
+//        return http.build();
+//    }
+//}
+
 @Configuration
 public class SecurityConfig {
 
@@ -13,13 +31,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/signup", "/auth/login").permitAll()  // mở cho phép
-                        .anyRequest().authenticated() // còn lại cần đăng nhập
-                )
-                .httpBasic(Customizer.withDefaults());
+                        .anyRequest().permitAll() // ⭐ TẮT HẾT AUTH
+                );
 
         return http.build();
     }
 }
+

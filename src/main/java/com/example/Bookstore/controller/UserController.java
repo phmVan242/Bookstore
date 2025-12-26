@@ -24,11 +24,12 @@ public class UserController {
     }
 
     // Tạo User mới
-    @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDto) {
-        UserDTO savedUser = userService.createUser(userDto);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDto) {
+//        UserDTO savedUser = userService.createUser(userDto);
+//
+//        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+//    }
 
     // Cập nhật User
     @PutMapping("/{id}")
