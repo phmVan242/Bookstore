@@ -42,5 +42,7 @@ public class AuthServiceImpl implements AuthService {
         User createdUser = userRepository.save(user);
         return UserMapper.mapToUserDTO(createdUser);
     }
+
+
 }
 
