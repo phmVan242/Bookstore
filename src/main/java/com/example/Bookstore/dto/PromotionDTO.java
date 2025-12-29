@@ -45,7 +45,7 @@ public class PromotionDTO {
 
     private String description;
 
-    private boolean active;
+    private Boolean active;
 
     private boolean current;
 }

@@ -48,7 +48,7 @@ public class Book extends BaseModel{
     private Category category;
 
     @Column(name = "is_active")
-    private boolean isActive = true;
+    private Boolean isActive = true;
 
     @OneToMany(mappedBy = "book")
     private List<OrderDetail> orderDetails = new ArrayList<>();

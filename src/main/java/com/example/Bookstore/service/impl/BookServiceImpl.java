@@ -64,7 +64,7 @@ public class BookServiceImpl implements BookService {
         book.setStockQuantity(dto.getStockQuantity());
         book.setPublisher(dto.getPublisher());
         book.setPublishedDate(dto.getPublishedDate());
-        book.setActive(dto.isActive());
+        book.setIsActive(dto.getActive());
 
         if (dto.getCategoryId() != null) {
             Category category = categoryRepository.findById(dto.getCategoryId())

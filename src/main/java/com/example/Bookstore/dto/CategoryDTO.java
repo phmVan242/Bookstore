@@ -18,7 +18,7 @@ public class CategoryDTO {
 
     private String description;
 
-    private boolean active;
+    private Boolean active;
 
     private int bookCount;
 

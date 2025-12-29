@@ -12,7 +12,7 @@ public class CategoryMapper {
         dto.setId(category.getId());
         dto.setName(category.getName());
         dto.setDescription(category.getDescription());
-        dto.setActive(category.isActive());
+        dto.setActive(category.getIsActive());
 
         // số lượng sách trong category
         if (category.getBooks() != null) {
@@ -31,8 +31,10 @@ public class CategoryMapper {
         category.setId(dto.getId());
         category.setName(dto.getName());
         category.setDescription(dto.getDescription());
-        category.setActive(dto.isActive());
-
+//        category.setIsActive(dto.getActive());
+        category.setIsActive(
+                dto.getActive() != null ? dto.getActive() : true
+        );
         return category;
     }
 }

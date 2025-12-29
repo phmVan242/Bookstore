@@ -42,7 +42,7 @@ public class Promotion extends BaseModel{
     private String description;
 
     @Column(name = "is_active")
-    private boolean isActive = true;
+    private Boolean isActive = true;
 
     @OneToMany(mappedBy = "promotion")
     private List<OrderDetail> orderDetails = new ArrayList<>();

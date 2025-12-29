@@ -19,7 +19,7 @@ public class BookMapper {
         dto.setPublisher(book.getPublisher());
         dto.setPublishedDate(book.getPublishedDate());
         dto.setImageUrls(book.getImageUrls());
-        dto.setActive(book.isActive());
+        dto.setActive(book.getIsActive());
 
         // category info
         if (book.getCategory() != null) {
@@ -44,7 +44,9 @@ public class BookMapper {
         book.setPublisher(dto.getPublisher());
         book.setPublishedDate(dto.getPublishedDate());
         book.setImageUrls(dto.getImageUrls());
-        book.setActive(dto.isActive());
+        book.setIsActive(
+                book.getIsActive() != null ? book.getIsActive() : true
+        );
 
         return book;
     }

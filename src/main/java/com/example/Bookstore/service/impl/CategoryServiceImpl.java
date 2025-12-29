@@ -38,6 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
             throw new RuntimeException("Category already exists!");
         }
         Category saved = categoryRepository.save(CategoryMapper.mapToCategory(categoryDTO));
+//        saved.setActive(true);
         return CategoryMapper.mapToCategoryDTO(saved);
     }
 

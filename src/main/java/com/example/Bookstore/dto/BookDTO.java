@@ -50,6 +50,6 @@ public class BookDTO {
 
     private String categoryName;
 
-    private boolean active;
+    private Boolean active;
 
 }

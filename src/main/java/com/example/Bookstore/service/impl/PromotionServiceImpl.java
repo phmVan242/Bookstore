@@ -40,7 +40,7 @@ public class PromotionServiceImpl  implements PromotionService {
         validateDateRange(dto.getStartDate(), dto.getEndDate());
 
         Promotion promotion = PromotionMapper.mapToPromotion(dto);
-        promotion.setActive(true);
+        promotion.setIsActive(true);
 
         return PromotionMapper.mapToPromotionDTO(
                 promotionRepository.save(promotion)
@@ -62,7 +62,7 @@ public class PromotionServiceImpl  implements PromotionService {
         promotion.setStartDate(dto.getStartDate());
         promotion.setEndDate(dto.getEndDate());
         promotion.setDescription(dto.getDescription());
-        promotion.setActive(dto.isActive());
+        promotion.setIsActive(dto.getActive());
 
         return PromotionMapper.mapToPromotionDTO(
                 promotionRepository.save(promotion)
@@ -75,7 +75,7 @@ public class PromotionServiceImpl  implements PromotionService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Promotion not found with id: " + id));
 
-        promotion.setActive(false);
+        promotion.setIsActive(false);
         promotionRepository.save(promotion);
     }
 

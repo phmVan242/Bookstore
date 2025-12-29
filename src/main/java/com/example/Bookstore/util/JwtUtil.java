@@ -1,5 +1,6 @@
 package com.example.Bookstore.util;
 
+import com.example.Bookstore.model.enums.Role;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -16,9 +17,10 @@ public class JwtUtil {
     private static final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
     // Sinh token
-    public static String generateToken(String username) {
+    public static String generateToken(String username, String role) {
         return Jwts.builder()
                 .setSubject(username)
+                .claim("role", role)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -45,4 +47,14 @@ public class JwtUtil {
             return false;
         }
     }
+
+    public static String extractRole(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("role", String.class);
+    }
+
 }

@@ -15,7 +15,7 @@ public class PromotionMapper {
         dto.setStartDate(promotion.getStartDate());
         dto.setEndDate(promotion.getEndDate());
         dto.setDescription(promotion.getDescription());
-        dto.setActive(promotion.isActive());
+        dto.setActive(promotion.getIsActive());
         return dto;
     }
 
@@ -28,7 +28,9 @@ public class PromotionMapper {
         promotion.setStartDate(dto.getStartDate());
         promotion.setEndDate(dto.getEndDate());
         promotion.setDescription(dto.getDescription());
-        promotion.setActive(dto.isActive());
+        promotion.setIsActive(
+                promotion.getIsActive() != null ? promotion.getIsActive() : true
+        );
         return promotion;
     }
 }
