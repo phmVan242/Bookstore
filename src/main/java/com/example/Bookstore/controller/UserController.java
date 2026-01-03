@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,10 +53,15 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    // Lấy User theo ID
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable long id) {
         UserDTO savedUser = userService.getUserById(id);
+        return ResponseEntity.ok(savedUser);
+    }
+
+    @GetMapping("/myInfo")
+    public ResponseEntity<UserDTO> getMyInfo() {
+        UserDTO savedUser = userService.getMyInfor();
         return ResponseEntity.ok(savedUser);
     }
 }

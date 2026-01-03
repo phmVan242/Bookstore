@@ -15,4 +15,6 @@ public interface UserService {
     UserDTO updateUser(Long id, UserDTO dto);
 
     void changeUserStatus(Long id, boolean active);
+
+    UserDTO getMyInfor();
 }

@@ -7,6 +7,8 @@ import com.example.Bookstore.model.User;
 import com.example.Bookstore.repository.UserRepository;
 import com.example.Bookstore.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,9 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+//    @PostAuthorize(
+//            "returnObject.username == authentication.name"
+//    )
     @Override
     public UserDTO getUserById(Long id) {
         User user = userRepository.findById(id)
@@ -79,5 +84,16 @@ public class UserServiceImpl implements UserService {
 
         user.setActive(active);
         userRepository.save(user);
+    }
+
+    @Override
+    public UserDTO getMyInfor() {
+        var context =  SecurityContextHolder.getContext();
+        String name = context.getAuthentication().getName();
+
+        User user = userRepository.findFirstByUsername(name).orElseThrow(
+                () -> new ResourceNotFoundException("WTF!!!!!!")
+        );
+        return UserMapper.mapToUserDTO(user);
     }
 }

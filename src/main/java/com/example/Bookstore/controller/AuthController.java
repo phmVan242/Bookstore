@@ -50,6 +50,10 @@ public class AuthController {
             if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
                 throw new RuntimeException("Invalid username or password");
             }
+            String s1 = "java";
+            String s2 = new String("java");
+            System.out.println(s1 == s2);
+
 
             String token = JwtUtil.generateToken(loginRequest.getUsername(), user.getRole().name());
 
