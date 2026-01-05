@@ -21,6 +21,7 @@ public class UserController {
     private UserService userService;
 
     // Lấy tất cả User
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> users = userService.getAllUsers();
@@ -59,7 +60,7 @@ public class UserController {
         return ResponseEntity.ok(savedUser);
     }
 
-    @GetMapping("/myInfo")
+    @GetMapping("/my-info")
     public ResponseEntity<UserDTO> getMyInfo() {
         UserDTO savedUser = userService.getMyInfor();
         return ResponseEntity.ok(savedUser);

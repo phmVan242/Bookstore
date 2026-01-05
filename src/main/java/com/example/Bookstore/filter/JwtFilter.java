@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,12 +20,11 @@ import java.util.List;
 public class JwtFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain chain)
-            throws ServletException, IOException {
-
-//        System.out.println("JWT FILTER RUNNING: " + request.getRequestURI());
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain chain
+    ) throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
 
@@ -36,15 +36,13 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = authHeader.substring(7);
 
         if (!JwtUtil.validateToken(token)) {
-            SecurityContextHolder.clearContext(); // !!!
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
+            SecurityContextHolder.clearContext();
+            throw new BadCredentialsException("Invalid JWT token");
         }
 
         String username = JwtUtil.extractUsername(token);
-
         String role = JwtUtil.extractRole(token);
-        System.out.println("ROLE IN TOKEN = " + role + username);
+
         List<GrantedAuthority> authorities =
                 List.of(new SimpleGrantedAuthority("ROLE_" + role));
 
@@ -54,11 +52,9 @@ public class JwtFilter extends OncePerRequestFilter {
                         null,
                         authorities
                 );
-        System.out.println("ROLE IN TOKEN = " + role);
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         chain.doFilter(request, response);
-
     }
 }
 
