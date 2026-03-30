@@ -2,6 +2,7 @@ package com.example.Bookstore.controller;
 
 import com.example.Bookstore.dto.OrderDTO;
 import com.example.Bookstore.service.OrderService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/api/auth/orders")
 public class OrderController {
 
     private final OrderService orderService;
@@ -39,7 +40,7 @@ public class OrderController {
 
     // Tạo mới order
     @PostMapping
-    public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDto) {
+    public ResponseEntity<OrderDTO> createOrder(@Valid @RequestBody OrderDTO orderDto) {
         OrderDTO createdOrder = orderService.createOrder(orderDto);
         return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }

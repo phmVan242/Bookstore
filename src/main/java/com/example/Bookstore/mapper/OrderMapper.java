@@ -52,7 +52,7 @@ public class OrderMapper {
         order.setShippingAddress(dto.getShippingAddress());
         order.setPaymentMethod(dto.getPaymentMethod());
         order.setNote(dto.getNote());
-        order.setOrderDate(dto.getOrderDate());
+//        order.setOrderDate(dto.getOrderDate());
         order.setCompletedDate(dto.getCompletedDate());
         // ❗ user + orderDetails set trong Service
 

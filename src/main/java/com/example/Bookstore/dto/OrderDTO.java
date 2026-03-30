@@ -4,6 +4,7 @@ import com.example.Bookstore.model.Order;
 import com.example.Bookstore.model.OrderDetail;
 import com.example.Bookstore.model.enums.OrderStatus;
 import com.example.Bookstore.model.enums.PaymentMethod;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,6 +31,8 @@ public class OrderDTO {
 
     private Double discountAmount;
 
+    @NotNull(message = "Final amount is required")
+    @Min(value = 0, message = "Final amount must be >= 0")
     private Double finalAmount;
 
     @NotNull(message = "Order status is required")
